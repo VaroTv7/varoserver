@@ -1,0 +1,11 @@
+# /srv/docker_apps/homepage/config/widgets.yaml
+
+- resources:
+    cpu: true
+    memory: true
+    disk: /
+
+- search:
+    provider: duckduckgo
+    target: _blank
+

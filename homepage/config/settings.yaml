@@ -1,0 +1,15 @@
+# /srv/docker_apps/homepage/config/settings.yaml
+
+# Esto es para la comprobación de conectividad, útil pero no directamente para el error de host.
+# Lo ponemos por si acaso y para futuras pruebas.
+connectivityCheck:
+  # Defaults to "https://gstatic.com/generate_204"
+  # Set to "disable" to disable
+  target: https://gstatic.com/generate_204
+  # interval: 60 # seconds
+  # timeout: 5 # seconds
+
+# Desafortunadamente, Homepage no parece tener una opción directa en settings.yaml
+# para "hosts permitidos" de forma explícita como otras apps.
+# El error "Host validation failed" suele venir de un framework subyacente (como Next.js)
+# si está en modo producción.

@@ -1,0 +1,20 @@
+# Ignorar todo por defecto
+*
+
+# --- EXCEPCIONES (Archivos que SÍ queremos versionar) ---
+
+# Archivo .gitignore (para que el propio ignore se versione)
+!.gitignore
+
+# Homepage
+!homepage/
+!homepage/docker-compose.yml
+!homepage/config/
+!homepage/config/bookmarks.yaml
+!homepage/config/custom.css
+!homepage/config/custom.js
+!homepage/config/docker.yaml
+!homepage/config/kubernetes.yaml
+!homepage/config/services.yaml
+!homepage/config/settings.yaml
+!homepage/config/widgets.yaml

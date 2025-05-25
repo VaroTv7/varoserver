@@ -1,0 +1,21 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Mis Aplicaciones:
+    - Firefly 3:
+        icon: mdi-finance # O el icono que quieras de https://pictogrammers.com/library/mdi/
+        href: http://192.168.1.12:7777/
+        description: Gestor de Finanzas Personales
+
+- My Second Group:
+    - JellyFin:
+        icon: mdi-movie-play #
+        href: http://192.168.1.12:8096
+        description: Servidor Multimedia
+
+- My Third Group:
+    - Paperless:
+        icon: mdi-file-document-check-outline 
+        href: http://192.168.1.12:8008
+        description: Documentacion Personal

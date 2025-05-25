@@ -1,0 +1,418 @@
+/* custom.css para Homepage - Tema Elegante Moderno y Eficiente */
+
+/* -------------------------------------------------------------------------- */
+/*  VARIABLES GLOBALES Y ESTILO BASE
+/* -------------------------------------------------------------------------- */
+:root {
+  --primary-bg: #1a212e; /* Azul oscuro principal */
+  --secondary-bg: #23293a; /* Fondo para tarjetas y elementos secundarios */
+  --accent-color: #4f9eda; /* Azul acento principal (enlaces, iconos) */
+  --header-color: #64d2ff; /* Azul claro para títulos destacados y hovers */
+  --text-color: #e0e4ef; /* Texto principal (blanco con ligero tono azulado) */
+  --text-muted-color: #a0a8b8; /* Texto secundario o menos importante */
+  --border-color: rgba(79, 158, 218, 0.25); /* Borde sutil */
+  --card-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra suave para tarjetas */
+  --hover-bg: #2c3347; /* Fondo para elementos al pasar el cursor */
+  --border-radius: 6px; /* Radio de borde consistente */
+  --status-online: #3ce07c; /* Verde para estado "online" */
+  --status-offline: #ff5e5e; /* Rojo para estado "offline" */
+
+  /* Tipografía */
+  --font-family-sans: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+
+  /* Transiciones */
+  --transition-fast: all 0.2s ease-in-out;
+  --transition-normal: all 0.3s ease-in-out;
+}
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  CABECERA Y NAVEGACIÓN
+/* -------------------------------------------------------------------------- */
+/* Asumiendo que Homepage usa estas clases para la cabecera */
+.layout-header, /* Clase común en muchos dashboards */
+header, /* Etiqueta genérica */
+.navbar { /* Clase común de Bootstrap/similares */
+  background-color: var(--primary-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Título de la página o logo */
+.navbar-brand,
+.header-title {
+  color: var(--header-color);
+  font-weight: 600;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+/* Barra de búsqueda */
+.search-input input[type="search"], /* Más específico si Homepage tiene un wrapper */
+input[type="search"] {
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  padding: 0.5rem 0.75rem;
+  transition: var(--transition-fast);
+  min-width: 250px; /* Ancho mínimo para que no sea muy pequeña */
+}
+
+.search-input input[type="search"]::placeholder {
+  color: var(--text-muted-color);
+}
+
+.search-input input[type="search"]:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(var(--accent-color), 0.25);
+  outline: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  CONTENIDO PRINCIPAL Y GRUPOS
+/* -------------------------------------------------------------------------- */
+.layout-main, /* Clase común para el contenedor principal */
+main {
+  padding: 1.5rem;
+  max-width: 1400px; /* Limita el ancho en pantallas muy grandes */
+  margin: 0 auto; /* Centra el contenido */
+}
+
+/* Encabezados de Grupos de Servicios/Bookmarks */
+.group .group-header h2, /* Asumiendo estructura .group > .group-header > h2 */
+h2.group-title, /* Si el h2 tiene directamente la clase */
+.page-header h2, /* Otra estructura común */
+h3 { /* Si usas h3 para grupos */
+  color: var(--header-color);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+/* Contenedor de la cuadrícula de tarjetas (servicios/bookmarks) */
+.group .grid, /* Clase común para la cuadrícula dentro de un grupo */
+.service-grid,
+.bookmark-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsivo */
+  gap: 1.5rem; /* Espacio entre tarjetas */
+}
+
+/* -------------------------------------------------------------------------- */
+/*  TARJETAS (SERVICIOS Y BOOKMARKS)
+/* -------------------------------------------------------------------------- */
+/* Intenta usar selectores más específicos de Homepage si los conoces, ej: */
+/* .service-widget, .bookmark-widget */
+.card,
+.item-container { /* Clase genérica de tu CSS original */
+  background-color: var(--secondary-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-normal);
+  overflow: hidden; /* Para que el contenido no se salga si tiene bordes */
+  display: flex; /* Para alinear contenido si es necesario */
+  flex-direction: column;
+}
+
+.card:hover,
+.item-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  background-color: var(--hover-bg);
+}
+
+/* Contenido interno de la tarjeta (enlace principal) */
+.card a,
+.item-container a {
+  text-decoration: none;
+  color: inherit; /* Hereda el color del texto de la tarjeta */
+  display: flex; /* Para controlar el layout interno */
+  align-items: center; /* Centrar icono y texto verticalmente */
+  padding: 1rem;
+  flex-grow: 1; /* Para que el enlace ocupe todo el espacio disponible */
+}
+
+/* Icono dentro de la tarjeta */
+.card .icon,
+.item-container .item-icon {
+  color: var(--accent-color);
+  font-size: 1.8rem; /* Tamaño de icono */
+  margin-right: 1rem;
+  transition: var(--transition-fast);
+}
+
+.card:hover .icon,
+.item-container:hover .item-icon {
+  color: var(--header-color);
+  transform: scale(1.05);
+}
+
+/* Contenido de texto en la tarjeta */
+.card .content,
+.item-container .item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nombre del servicio/bookmark */
+.card .name,
+.item-container .item-name {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+}
+
+.card:hover .name,
+.item-container:hover .item-name {
+  color: var(--header-color);
+}
+
+/* Descripción del servicio/bookmark */
+.card .description,
+.item-container .item-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted-color);
+  line-height: 1.4;
+}
+
+/* URL/abreviatura en bookmarks (si existe) */
+.card .url-display,
+.item-container .item-abbr {
+  font-size: var(--font-size-sm);
+  color: var(--accent-color);
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+.card:hover .url-display,
+.item-container:hover .item-abbr {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  WIDGETS (CPU, RAM, DISCO) Y ESTADO
+/* -------------------------------------------------------------------------- */
+.widget-container, /* Si Homepage tiene un contenedor para widgets */
+.top-widgets { /* Otra posible clase */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem; /* Espacio antes de los grupos */
+  align-items: center; /* Para alinear widgets y búsqueda si están juntos */
+}
+
+/* Estilo individual para widgets de recursos */
+.resource-monitor, /* Tu clase original */
+.system-stats .stat { /* Si están dentro de un contenedor .system-stats */
+  background-color: rgba(35, 41, 58, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.3rem 0.7rem;
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.resource-monitor .label,
+.system-stats .stat-label {
+  color: var(--text-muted-color);
+}
+
+.resource-monitor .value,
+.system-stats .stat-value {
+  color: var(--header-color);
+  font-weight: 600;
+}
+
+/* Indicadores de estado */
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.status-indicator.online,
+.status-up {
+  background-color: var(--status-online);
+  box-shadow: 0 0 5px var(--status-online);
+}
+.status-indicator.offline,
+.status-down {
+  background-color: var(--status-offline);
+  box-shadow: 0 0 5px var(--status-offline);
+}
+
+/* -------------------------------------------------------------------------- */
+/*  PIE DE PÁGINA Y ELEMENTOS MISCELÁNEOS
+/* -------------------------------------------------------------------------- */
+footer,
+.layout-footer {
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  color: var(--text-muted-color);
+  font-size: var(--font-size-sm);
+  border-top: 1px solid var(--border-color);
+}
+
+.version-info { /* Para la info de versión de Homepage */
+  color: var(--text-muted-color);
+  font-size: 0.75rem;
+}
+
+/* Barra de desplazamiento personalizada (sutil) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--primary-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-bg);
+  border-radius: 4px;
+  border: 1px solid var(--primary-bg); /* Crea un pequeño borde alrededor del thumb */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* -------------------------------------------------------------------------- */
+/*  MEJORAS PARA DARK MODE (SI HAY SWITCH AUTOMÁTICO DEL SISTEMA)
+/*  Estos son los valores por defecto, si quieres un tema claro, ajústalos aquí.
+/* -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: light) {
+  /* Descomenta y ajusta si quieres un tema claro separado */
+  /*
+  :root {
+    --primary-bg: #f4f7fa;
+    --secondary-bg: #ffffff;
+    --accent-color: #1e88e5;
+    --header-color: #1565c0;
+    --text-color: #2c3e50;
+    --text-muted-color: #566573;
+    --border-color: #dee2e6;
+    --card-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    --hover-bg: #f0f0f0;
+  }
+  .search-input input[type="search"] {
+    background-color: #e9ecef;
+  }
+  .resource-monitor, .system-stats .stat {
+    background-color: rgba(233, 236, 239, 0.8);
+  }
+  */
+}
+
+/* -------------------------------------------------------------------------- */
+/*  CLASES DE UTILIDAD Y RESPONSIVIDAD
+/* -------------------------------------------------------------------------- */
+.hidden {
+  display: none !important; /* Para ocultar elementos con JS si es necesario */
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .layout-main, main {
+    padding: 1rem;
+  }
+  .group .grid, .service-grid, .bookmark-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Tarjetas un poco más pequeñas */
+    gap: 1rem;
+  }
+  .navbar-brand, .header-title {
+    font-size: 1.1rem;
+  }
+  .search-input input[type="search"] {
+    min-width: auto; /* Que ocupe el espacio disponible */
+    width: 100%;
+    margin-top: 0.5rem; /* Si se apila debajo del logo */
+  }
+  .widget-container, .top-widgets {
+    flex-direction: column; /* Apila los widgets */
+    align-items: stretch; /* Que ocupen todo el ancho */
+  }
+  /* Podrías ocultar el widget de reloj en pantallas muy pequeñas si interfiere */
+  /* .clock-widget { display: none; } */
+}
+
+@media (max-width: 480px) {
+  .group .grid, .service-grid, .bookmark-grid {
+    grid-template-columns: 1fr; /* Una columna */
+  }
+  .card .icon, .item-container .item-icon {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+  }
+  .card .name, .item-container .item-name {
+    font-size: 1rem;
+  }
+}
+
+/* Animación de entrada para las tarjetas (usar con JS) */
+.card-enter {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.card-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilos para el widget de reloj (JS) */
+.clock-widget {
+  position: absolute;
+  top: 50%; /* Centrado verticalmente en la cabecera */
+  transform: translateY(-50%);
+  right: 1.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted-color);
+  font-weight: 500;
+  z-index: 1001; /* Por encima de otros elementos de la cabecera */
+  white-space: nowrap; /* Evita que se rompa en dos líneas */
+}
+.clock-widget .time {
+  color: var(--header-color);
+}
+.clock-widget .date {
+  opacity: 0.8;
+  margin-left: 0.5em;
+}
+
+@media (max-width: 768px) {
+  .clock-widget {
+    /* Opcional: Ocultar o reposicionar en pantallas pequeñas si molesta */
+    /* display: none; */
+    position: static; /* Quitar el posicionamiento absoluto */
+    transform: none;
+    text-align: right;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}
