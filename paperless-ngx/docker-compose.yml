@@ -1,0 +1,79 @@
+version: '3.9' # O 3.8 si tu Docker Compose es más antiguo
+
+services:
+  broker:
+    image: redis:7.4-alpine # O una versión más reciente si está disponible
+    container_name: paperless_broker
+    restart: unless-stopped
+    volumes:
+      - /srv/docker_apps/paperless-ngx/redisdata:/data
+    networks:
+      - paperless_internal
+
+  db:
+    image: postgres:16-alpine # O una versión más reciente si está disponible
+    container_name: paperless_db
+    restart: unless-stopped
+    volumes:
+      - /srv/docker_apps/paperless-ngx/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: varonati@#paperless # ¡CAMBIA ESTA CONTRASEÑA!
+    networks:
+      - paperless_internal
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless_webserver
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - "8008:8000" # Puerto del Host:Puerto del Contenedor. Puedes cambiar 8008 si está ocupado
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - /srv/docker_apps/paperless-ngx/data:/usr/src/paperless/data
+      - /srv/docker_apps/paperless-ngx/media:/usr/src/paperless/media
+      - /srv/docker_apps/paperless-ngx/consume:/usr/src/paperless/consume
+      - /etc/localtime:/etc/localtime:ro # Para la zona horaria correcta en los logs
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBPORT: 5432
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: varonati@#paperless # ¡USA LA MISMA CONTRASEÑA QUE ARRIBA!
+      PAPERLESS_URL: http://192.168.1.12:8008 # ¡IMPORTANTE! Cambia esto
+      # --- Configuración de Usuario Inicial (opcional, se te pedirá en la primera ejecución si no lo pones) ---
+      # PAPERLESS_ADMIN_USER: tu_usuario_admin # Descomenta y cambia
+      # PAPERLESS_ADMIN_PASSWORD: tu_contraseña_admin_segura # Descomenta y cambia
+      # --- Opciones de Configuración Adicionales (revisa la documentación de Paperless-ngx) ---
+      PAPERLESS_TIME_ZONE: 'Europe/Madrid' # Cambia a tu zona horaria
+      PAPERLESS_CONSUMER_POLL_INTERVAL: '60' # Segundos entre chequeos de la carpeta consume
+      PAPERLESS_CONSUMER_RECURSIVE: 'true'
+      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: 'true'
+      PAPERLESS_OCR_LANGUAGE: 'spa+eng' # Para español e inglés, ajusta según necesites (ej. 'spa' solo para español)
+      # --- Para el usuario dentro del contenedor (si tienes problemas de permisos) ---
+      # USERMAP_UID: 1000 # UID de tu usuario varoserver (ejecuta `id -u varoserver`)
+      # USERMAP_GID: 1000 # GID de tu usuario varoserver (ejecuta `id -g varoserver`)
+    networks:
+      - paperless_internal
+      - default # Para exponer el puerto al host
+
+  # El consumidor se ejecuta dentro del contenedor del webserver por defecto si no se define
+  # un servicio 'consumer' separado. Para la mayoría de los casos de uso doméstico, esto está bien.
+  # Si tienes un volumen muy alto de documentos, podrías separar el consumidor.
+
+networks:
+  paperless_internal:
+    internal: true # Esta red solo será accesible por los contenedores de este stack
+  default: # Docker crea una red 'default' para el proyecto si no se especifica una para los puertos
+
+# No es necesario definir volúmenes aquí si usas bind mounts como arriba.

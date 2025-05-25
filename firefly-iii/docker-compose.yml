@@ -1,0 +1,44 @@
+services:
+  app:
+    image: fireflyiii/core:latest
+    container_name: firefly_iii_app
+    restart: always
+    volumes:
+      - ./firefly_iii_upload:/var/www/html/storage/upload
+    env_file: .env
+    ports:
+      - "7777:8080" # Usa la variable del puerto del host
+    depends_on:
+      db:
+        condition: service_healthy
+      # redis: # Descomenta si decides usar Redis
+      #   condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: firefly_iii_db
+    hostname: fireflyiiidb
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER:-fireflyiii}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-secretfireflyiiipassword}
+      - POSTGRES_DB=${DB_DATABASE:-fireflyiii}
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-fireflyiii} -d ${DB_DATABASE:-fireflyiii}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Descomenta esta sección completa si quieres usar Redis.
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: firefly_iii_redis
+  #   hostname: fireflyiiiredis
+  #   restart: always
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5

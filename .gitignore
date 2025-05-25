@@ -18,3 +18,23 @@
 !homepage/config/services.yaml
 !homepage/config/settings.yaml
 !homepage/config/widgets.yaml
+
+# Firefly III
+!firefly-iii/
+!firefly-iii/docker-compose.yml
+# Si tienes un archivo .env.example para Firefly III, descomenta la siguiente línea:
+# !firefly-iii/.env.example
+# Si tienes otros archivos de configuración de texto específicos para Firefly III
+# que no son el docker-compose.yml y quieres versionarlos, añádelos aquí.
+# Por ejemplo: !firefly-iii/config/custom_firefly_setting.yaml
+
+# Paperless-ngx
+!paperless-ngx/
+!paperless-ngx/docker-compose.yml
+# Si tienes un archivo docker-compose.env.example para Paperless-ngx, descomenta:
+# !paperless-ngx/docker-compose.env.example
+# Si tienes un archivo paperless.conf que quieres versionar Y NO CONTIENE SECRETOS, descomenta:
+# !paperless-ngx/paperless.conf
+# O si tienes un paperless.conf.example, descomenta:
+# !paperless-ngx/paperless.conf.example
+# Si tienes otros archivos de configuración de texto específicos para Paperless-ngx, añádelos.
