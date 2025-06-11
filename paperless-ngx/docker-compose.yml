@@ -59,6 +59,7 @@ services:
       PAPERLESS_CONSUMER_POLL_INTERVAL: '60' # Segundos entre chequeos de la carpeta consume
       PAPERLESS_CONSUMER_RECURSIVE: 'true'
       PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: 'true'
+      PAPERLESS_ALLOWED_HOSTS: ""localhost:8008,192.168.1.12:8008,100.94.190.33:8008"
       PAPERLESS_OCR_LANGUAGE: 'spa+eng' # Para español e inglés, ajusta según necesites (ej. 'spa' solo para español)
       # --- Para el usuario dentro del contenedor (si tienes problemas de permisos) ---
       # USERMAP_UID: 1000 # UID de tu usuario varoserver (ejecuta `id -u varoserver`)
